@@ -1,0 +1,36 @@
+.l-px(top,@color:black){
+    position: relative;
+        &::before{
+            position: absolute;
+            content: "";
+            display: block;
+            height: 1px;
+            top:0;
+            background:@color;
+            width:100%;
+            @media (-webkit-device-pixel-ratio:2 ) {
+                transform:scaleY(.5)   
+            }
+            @media (-webkit-device-pixel-ratio:3 ) {
+                transform:scaleY(.333333333333)   
+            }
+        }   
+}
+.l-px(bottom,@color:black){
+    position: relative;
+        &::before{
+            position: absolute;
+            content: "";
+            display: block;
+            height: 1px;
+            bottom:0;
+            background:@color;
+            width:100%;
+            @media (-webkit-device-pixel-ratio:2 ) {
+                transform:scaleY(.5)   
+            }
+            @media (-webkit-device-pixel-ratio:3 ) {
+                transform:scaleY(.333333333333)   
+            }
+        }   
+}

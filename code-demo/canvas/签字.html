@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    html,body{
+        background: gray;
+        height:100%;
+        overflow: hidden;
+    }
+    #can{
+       background-color:#fff;
+       position: absolute;
+       left: 0;
+       top:0;
+       right:0;
+       bottom:0;
+       margin:auto;
+    }
+    
+    </style>
+</head>
+<body>
+    <canvas id="can" width="800" height="500"></canvas>
+</body>
+<script>
+var canvas=document.getElementById("can");
+if(canvas.getContext){
+var ctx=canvas.getContext("2d");
+canvas.onmousedown=function(e){
+
+    e=e||window.event;
+
+   /*事件捕获*/
+   if ( canvas.setCapture ) {
+    canvas.setCapture();
+        }
+    ctx.beginPath();
+ 
+    ctx.moveTo(e.clientX-canvas.offsetLeft,e.clientY-canvas.offsetTop);
+    document.onmousemove=function(e){
+        ctx.save();
+    ctx.strokeStyle="red";
+     e=e||window.event;
+     ctx.lineTo(e.clientX-canvas.offsetLeft,e.clientY-canvas.offsetTop);
+     ctx.stroke();
+     ctx.restore(); 
+    }
+    //可能出现鼠标离开页面的情况，所以将事件绑定在document上
+    document.onmouseup=function(){
+        document.onmousemove=null;
+        document.onmouseup=null;
+        //释放全局捕获
+        if (canvas.releaseCapture ) {
+                canvas.releaseCapture();
+            }
+    }
+   //阻止事件默认行为
+    return false;
+    }
+}
+
+</script>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            background: gray;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #can {
+            background-color: #fff;
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="can" width="500" height="500"></canvas>
+</body>
+<script>
+    var canvas = document.getElementById("can");
+    if (canvas.getContext) {
+        var ctx = canvas.getContext("2d");
+    setInterval(function(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      draw();
+    },1000)
+    }
+    function draw(){
+      
+        ctx.save();
+        ctx.translate(250, 250);
+        ctx.rotate(-90 * Math.PI / 180);
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.lineWidth = 14;
+        ctx.strokeStyle = "blue";
+        ctx.arc(0, 0, 200, 0, Math.PI * 2);
+        ctx.stroke();
+        //时表盘
+        ctx.save();
+
+        ctx.strokeStyle = "#000";
+        for (var i = 0; i < 12; i++) {
+
+            ctx.beginPath();
+            ctx.lineWidth = 10;
+            ctx.moveTo(140, 0);
+            ctx.lineTo(180, 0);
+            ctx.stroke();
+            ctx.rotate(30 * Math.PI / 180);
+        }
+        ctx.restore();
+        //分表盘
+        ctx.save();
+        ctx.strokeStyle = "#000";
+        for (var i = 0; i < 60; i++) {
+
+            if (i % 5 != 0) {
+                ctx.beginPath();
+                ctx.lineWidth = 6;
+               // console.log(i);
+                ctx.moveTo(160, 0);
+                ctx.lineTo(180, 0);
+                ctx.stroke();
+            }
+            ctx.rotate(6 * Math.PI / 180);
+        }
+        ctx.restore();
+        var date = new Date();
+        var s = date.getSeconds();
+        var m = date.getMinutes()+s/60;
+        var h = date.getHours()+m/60;
+        h=h>12?h-12:h;
+        console.log(s,m,h);
+        //时指针
+        ctx.save();
+        ctx.beginPath();
+        ctx.rotate(h*30 * Math.PI / 180);
+        ctx.lineWidth = 12;
+       // ctx.rotate(200 * Math.PI / 180);
+        ctx.moveTo(-20, 0);
+        ctx.lineTo(120, 0);
+        ctx.stroke();
+        ctx.restore();
+        //分指针
+        ctx.save();
+        ctx.beginPath();
+        ctx.rotate(m*6 * Math.PI / 180);
+        ctx.lineWidth = 10;
+      //  ctx.rotate(180 * Math.PI / 180);
+        ctx.moveTo(-20, 0);
+        ctx.lineTo(140, 0);
+        ctx.stroke();
+        ctx.restore();
+        //秒指针
+        ctx.save();
+        ctx.beginPath();
+        ctx.rotate(s*6 * Math.PI / 180);
+        ctx.lineWidth = 8;
+        ctx.strokeStyle = "red";
+        //ctx.rotate(80 * Math.PI / 180);
+        ctx.moveTo(-20, 0);
+        ctx.lineTo(160, 0);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.fillStyle = "red";
+        ctx.arc(0, 0, 10, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+
+
+        ctx.restore();
+
+        //   ctx.clearRect(190,190,130,130);
+        //    ctx.save();
+        //    ctx.translate(250,250);
+        //    ctx.fillStyle="red";
+        //    ctx.beginPath();
+        //    ctx.rotate(x);
+        //    ctx.fillRect(0,0,4,60);
+        //   // console.log(g*Math.PI/180);
+        //    ctx.restore();
+
+
+    }
+// function timer(){
+//     var date=new Date();
+//     var seconds=date.getSeconds();
+//     var minutes=date.getMinutes();
+//     var hours=date.getHours();
+//     console.log(seconds)
+//     //console.log(360*Math.PI/180)
+//     //console.log(2*Math.PI)
+//    var x=seconds/60*360*Math.PI/180;
+//    // console.log(x);
+//     draw(x);
+// }
+// timer();
+
+ 
+   
+</script>
+
+</html>

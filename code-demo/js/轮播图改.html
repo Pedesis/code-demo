@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    *{
+        padding:0;
+        margin:0;
+    }
+    li{
+        list-style: none;
+    }
+    .wrap{
+        width: 300px;
+        height: 400px;
+        margin:200px auto;
+        overflow: hidden;
+        position: relative;
+    }
+    ul{
+        width: 1800px;
+        height: 400px; 
+        position: absolute;
+        left:0;
+        top:0;
+    }
+    li{
+        width: 300px;
+        height: 400px; 
+        display: block;
+        float: left;
+    }
+    img{
+        width: 300px;
+        height: 400px;
+    }
+    .bu{
+        position: absolute;
+        bottom: 15px;
+        left:50%;
+        transform: translateX(-50%);
+        
+    }
+    .bu>a{
+        width: 10px;
+        height: 10px;
+        display: block;
+        background: green;
+        float: left;
+        margin-right:5px;
+    }
+    .bu>a.active{
+        background: red;
+    }
+   .arrow{
+       position: absolute;
+       text-align: center;
+       color:pink;
+       height: 100%;
+       line-height: 400px;
+       font-size:20px;
+   }
+   .nextpage{
+       right:10px;
+   }
+   .prevpage{
+       left: 10px;
+   }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <ul>
+            
+            <li><img src="images/1.jpeg" alt=""></li>
+            <li><img src="images/2.jpeg" alt=""></li>
+            <li><img src="images/3.jpeg" alt=""></li>
+            <li><img src="images/4.jpeg" alt=""></li>
+            <li><img src="images/1.jpeg" alt=""></li>
+        </ul>
+        <div class="nextpage arrow">&gt;</div>
+        <div class="prevpage arrow">&lt;</div>
+       <div class="bu">
+           <a href="javascript:;"  class="active"></a>
+           <a href="javascript:;" ></a>
+           <a href="javascript:;" ></a>
+           <a href="javascript:;" ></a>
+       </div>
+    </div>
+</body>
+<script>
+var ul=document.querySelector("ul");
+var aNode=document.querySelectorAll(".bu>a");
+var li=document.querySelectorAll("li");
+var prevNode=document.querySelector(".prevpage");
+var nextNode=document.querySelector(".nextpage");
+var flag=0;
+var index=0;
+function next(){
+    if(index==4){
+        index=0;
+    }
+    index++;
+    ul.style.left=-(index*300)+"px";
+    points();
+}
+function prev(){
+    if(index==0){
+        index=4;
+    }
+    index--;
+   
+    ul.style.left=-(index*300)+"px";
+    points();
+}
+nextNode.onclick=function(){
+    clearInterval(timer);
+    next();
+    move();
+
+}
+prevNode.onclick=function(){
+    clearInterval(timer);
+    prev();
+    move();
+}
+var timer=0;
+//move();
+function points(){
+    for(var i=0;i<aNode.length;i++){
+    aNode[i].className="";
+   }
+if(index==4){
+    index=0;
+}
+aNode[index].className="active";
+}
+for(var i=0;i<aNode.length;i++){
+    aNode[i].num=i;
+    aNode[i].onclick=function(){
+        clearInterval(timer);
+        ul.style.left=-(this.num*300)+"px";
+        index=this.num;
+        points();
+        move();
+    }
+}
+
+move();
+function move(){
+    clearInterval(timer);
+    timer=setInterval(function(){
+        next();
+       
+    },1000)
+}
+
+</script>
+</html>

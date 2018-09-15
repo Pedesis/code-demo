@@ -1,0 +1,299 @@
+//css reset
+html,body,ul,li,h1,h2,h3,h4,span,div,p,a,form,input{margin: 0;padding: 0;font-family: helvetica;}
+html,body{height: 100%;overflow: hidden;}
+ul{list-style: none;}
+a{text-decoration: none;display: block}
+a,input,button{-webkit-tap-highlight-color: rgba(0,0,0,0);
+                -webkit-appearance: none;outline: none;border: none;}
+img{display: block}
+html,body{
+    height: 100%;
+    overflow: hidden;
+}
+@rem:16/1080rem;
+@import url(mixin.less);
+@import url(component.less);
+@import url(clearfix.less);
+#wrap{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-size: 16*@rem;
+    background:#eee;
+    position: relative;
+    .head{
+        background:#232323;
+        position: absolute;
+        width: 100%;
+        height: 100px;
+        height: 270*@rem;
+    .head-top{
+        height: 135*@rem;
+        &>a:nth-child(1){
+        float: left;
+        padding:26*@rem 17*@rem 21*@rem;
+            img{
+                width:240*@rem;
+
+            }
+        }
+        &>a:nth-child(2){
+            
+            float: left;
+            width: 129*@rem;
+            height:  135*@rem;
+            background:url(../images/menuBtn.png) no-repeat;
+            background-size: 82*@rem 233*@rem;
+            background-position: center 16*@rem;
+            &.active{
+                background-position: center -120*@rem;
+            }
+        }
+        .btns{
+            float: right;
+            padding-top:21*@rem;
+            font-size: 42*@rem;
+            &>a:nth-child(2),&>a:nth-child(3){
+                width:111*@rem;
+                height: 78*@rem;
+                line-height: 78*@rem;
+                background:#690;
+                color:#CCC;
+                margin-right:15*@rem;
+                text-align: center;
+                border-radius: 8*@rem;
+                float: left;
+                
+            }
+            &>a:nth-child(1){
+                width:130*@rem;
+                height: 88*@rem;
+                line-height: 88*@rem;
+                color:#fff;
+                background:#690;
+                margin-top:3*@rem;
+                margin-right:30*@rem;
+                font-weight: bold;
+                border-radius: 10*@rem;
+                float: left;
+                text-align: center;
+            } 
+        }
+    }
+    .head-bottom{
+        height:103*@rem;
+        padding:16*@rem;
+        input[type="text"]{
+            box-sizing: border-box;
+            width:829*@rem;
+            height: 103*@rem;
+            background:#999;
+            padding:5*@rem 10*@rem;
+            border: 1px solid #5a5a5a;
+            font-size: 41*@rem;
+            color:#333;
+            border-radius: 15*@rem 0 0 15*@rem;
+            float: left;
+            &::-webkit-input-placeholder{
+                color: #333;//设置placeholder颜色
+            }
+            &:focus{
+                background: #FFF;
+            }
+        }
+        input[type="button"]{
+            width:203*@rem;
+            height: 103*@rem;
+            background:#414040;
+            border: none;
+            font-size: 41*@rem;
+            color:#fff;
+            border-radius: 0 15*@rem 15*@rem 0;
+            float: right;
+        }
+    }
+    .mask{
+        .l-px(top,#6a6a6a);
+        position: absolute;
+        width:100%;
+        top:135*@rem;
+        left:0;
+        z-index: 2;
+        padding:10*@rem 0;
+        background:rgba(0,0,0,.8);
+        display: none;
+        li{
+            width:22.5%;
+            height: 135*@rem;
+            line-height: 135*@rem;
+            font-size: 54*@rem;
+            text-align: center;
+            float: left;
+            a{
+                color: #fff;
+            }
+        }
+    
+     }
+    }
+    .content{
+        position: absolute;
+        top:270*@rem;
+        left:0;
+        bottom:0;
+        right:0;
+        background:#eee;
+        overflow: hidden;
+        .scrollBox{
+            position: absolute;
+            top:0;
+            right: 0;
+            width:8*@rem;
+            height: 100%;
+            background:green;
+            opacity: 0;
+            transition:1s opacity;
+            z-index: 9;
+        }
+        &>div{
+            
+            .nav{
+                .l-px(bottom);
+                box-sizing: border-box;
+                height:177*@rem;
+                padding-top:31*@rem;
+                padding-bottom:14*@rem;
+                background:#eee;
+                .list{
+                    font-size: 0;
+                    white-space: nowrap;
+                    float: left;
+                    &>li{
+                        height: 129*@rem;
+                        padding:0 38*@rem;
+                        font-size: 1rem;
+                        display: inline-block;
+                        line-height:129*@rem; 
+                        &.slipactive{
+                            background:#690;
+                            a{
+                                color:#fff;
+                        }
+                    }
+                        a{
+                            color:#020202;
+                        }
+                    }
+                    
+                }
+            }
+            .tap-wrap{
+                width: 1046*@rem;
+                background:#fff;
+                margin: 0 auto;
+                overflow: hidden;
+                .tap-head{
+                    height: 135*@rem;
+                    line-height: 135*@rem;
+                    &>span:nth-child(1){
+                        display: block;
+                        font-weight: bold;
+                        font-size: 1rem;
+                        float: left;
+                    }
+                    &>span:nth-child(2){
+                        display: block;
+                        float: right;
+    
+                    }
+                }
+                .tap-nav{
+                    height: 105*@rem;
+                    line-height: 105*@rem;
+                   position: relative;
+                    a{
+                        width: 120*@rem;
+                        height: 105*@rem;
+                        font-size: 44*@rem;
+                        display: block;
+                        text-align: center;
+                        color: #6b6b6b;
+                        float: left;
+                    }
+                    .green-tap{
+                        width: 120*@rem;
+                        height: 9*@rem;
+                        background: #6f900d;
+                        position: absolute;
+                        bottom:0;
+                    }
+                }
+                .tap-content{
+                    width: 300%;
+                    &:extend(.clearfix all);
+                    .loading{
+                        width:33.3333333333%;
+                        height: 10rem;
+                        background:url(../images/loading.gif) no-repeat;
+                        float: left;
+                        background-position: center;
+                        opacity: 0;
+                    }
+    
+                    ul:nth-child(2){
+                        width:33.3333333333%;
+                        &:extend(.clearfix all);
+                        float: left;
+                        li{
+                            box-sizing: border-box;
+                            width: 506*@rem;
+                            margin:8*@rem;
+                            padding:5*@rem;
+                            font-size: 40*@rem;
+                            background:#efefef;
+                            overflow: hidden;
+                            float: left;
+                            a{
+                                color: #000;
+                                img{
+                                    width: 100%;
+        
+                                }
+                                p{
+                                    white-space: nowrap;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                }
+                            }
+                            .left {
+                                float: left;
+                                &>span:nth-child(1){
+                                    display: inline-block;
+                                    background: url(../images/ice.png) no-repeat;
+                                    width:.5rem;
+                                    height: .5rem;
+                                }
+    
+                            }
+                            .right {
+                                float: left;
+                                margin-left: 30*@rem;
+                                &>span:nth-child(1){
+                                    width: .5rem;
+                                    height: .5rem;
+                                    display: inline-block;
+                                    background: url(../images/ice.png) no-repeat;
+                                    background-position: 0 -1rem;
+                                }
+                            }
+                            
+                            
+                        }
+                    }
+                }
+            }
+        }
+
+       
+    }
+}

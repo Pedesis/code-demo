@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    *{
+        padding:0;
+        margin:0;
+    }
+    html,body{
+        overflow: hidden;
+        height: 100%;
+    }
+    #wrap{
+        position: relative;
+        overflow: hidden;
+        height: 100%;
+        background: pink;
+    }
+    .scrollBox{
+        position: absolute;
+        top:0;
+        right: 0;
+        background:deeppink;
+        height: 100%;
+        width: 4px;
+        opacity: 0;
+        transition:1s opacity;
+    }
+    </style>
+</head>
+<body>
+   <div id="wrap">
+       <div id="content"></div>
+   </div> 
+   <div class="scrollBox"></div>
+</body>
+<script src="js/transform.js"></script>
+<script>
+        // document.addEventListener("touchstart", function (ev) {
+        //     ev = ev || event;
+        //     ev.preventDefault();
+        // })
+        // var styleNode = document.createElement("style");
+        // var w = document.documentElement.clientWidth / 16;
+        // styleNode.innerHTML = "html{font-size:" + w + "pY!important}"
+        // document.head.appendChild(styleNode);
+
+        for(var i=0;i<100;i++){
+            content.innerHTML+=i+"</br>";
+        }
+        var navDiv=document.querySelector("#wrap");
+         var wrapContent=document.querySelector("#wrap #content");
+        var scrollBox=document.querySelector(".scrollBox");
+        scrollBox.style.height=document.documentElement.clientHeight*(document.documentElement.clientHeight/wrapContent.offsetHeight)+"px";
+        
+        var callBack={
+            start:function(){
+             
+                scrollBox.style.opacity=1;
+            },
+            move:function(){
+                var scale=pedesis.transfromCss(this,"translateY")/(wrapContent.offsetHeight-document.documentElement.clientHeight);
+                pedesis.transfromCss(scrollBox,"translateY",-scale*(document.documentElement.clientHeight-scrollBox.offsetHeight));
+                
+            },
+            end:function(){
+             
+                
+                scrollBox.style.opacity=0;
+            }
+        }
+        pedesis.dragMoveY(navDiv,callBack);
+        // drag(navDiv,callBack);
+        // function drag(navDiv,callBack){
+        //     listUl=navDiv.children[0];
+        //     var start={x:0,y:0};
+        //     var trY=0;
+        //     var translateY=0;
+        //     var lastTime=0;
+        //     var lastPoint=0;
+        //     var pointDis=0,timeDis=1;
+        //     var minY=document.documentElement.clientHeight-listUl.offsetHeight;
+
+        //     //即点即停
+        //    var clear=0;
+        //    var Tween = {
+		// 	    Linear: function(t,b,c,d){ return c*t/d + b; },
+		// 	    back: function(t,b,c,d,s){
+	    //         if (s == undefined) s = 1.70158;
+	    //         return c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b;
+        // 	   }
+		// }
+        //     var isFirst=true;
+        //     var isY=true;
+        //    // console.log(minY);
+        //     navDiv.addEventListener("touchstart",function(e){
+        //         e=e||event;
+        //         listUl.style.transition="none";
+        //         start.x=e.changedTouches[0].clientX;
+        //         start.y=e.changedTouches[0].clientY;
+        //         trY=pedesis.transfromCss(listUl,"translateY");
+               
+        //         lastTime=new Date().getTime();
+        //         lastPoint=start.y;
+        //         pointDis=0;
+        //         listUl.handMove=false;
+
+        //         isFirst=true;
+        //         isY=true;
+        //         clearInterval(clear);
+        //         //滑动条
+        //         if(callBack && typeof callBack["start"]=="function"){
+        //             callBack["start"].call(listUl);
+                    
+        //         }
+        //     })
+        //     navDiv.addEventListener("touchmove",function(e){
+        //         if(!isY){
+        //             return;
+        //         }
+        //         e=e||event;
+        //          now={x:0,y:0};
+        //         now.y=e.changedTouches[0].clientY;
+        //         now.x=e.changedTouches[0].clientX;
+        //         var distY=now.y-start.y;
+        //             translateY=trY+distY;
+        //         var distX=now.x-start.x;
+        //             if(isFirst){
+        //                 isFirst=false;
+        //                 if(Math.abs(distX)>Math.abs(distY)){
+        //                 isY=false;
+        //                 return;
+        //                }
+
+        //             }
+                    
+
+
+        //         var nowTime=new Date().getTime();
+        //         var nowPoint=now.y;
+        //         pointDis=nowPoint-lastPoint;
+        //         timeDis=nowTime-lastTime;
+                
+        //         lastPoint=nowPoint;
+        //         lastTime=nowTime;
+            
+        //         //console.log(listUl.offsetWidth)
+
+        //         if(translateY>0){
+        //             listUl.handMove=true;
+        //             var scale=document.documentElement.clientHeight/((document.documentElement.clientHeight+translateY)*1.5);
+        //             translateY=pedesis.transfromCss(listUl,"translateY")+pointDis*scale;
+        //         }else if(translateY<minY){
+        //             listUl.handMove=true;
+        //             var over=document.documentElement.clientHeight/((document.documentElement.clientHeight+minY-translateY)*1.5);
+        //             translateY=pedesis.transfromCss(listUl,"translateY")+pointDis*over;
+        //         }
+        //         pedesis.transfromCss(listUl,"translateY",translateY);
+        //         if(callBack && typeof callBack["move"]=="function"){
+        //             callBack["move"].call(listUl);
+                    
+        //         }
+
+        //     })
+        //     navDiv.addEventListener("touchend",function(){
+        //         translateY=pedesis.transfromCss(listUl,"translateY");
+        //        // console.log(!listUl.handMove);
+        //         if(!listUl.handMove){
+        //             //var bsr="";
+        //             var  speed=pointDis/timeDis;
+        //         speed=Math.abs(speed)<0.5?0:speed;
+        //         var target=translateY+speed*200;
+        //         var time=Math.abs(speed)*0.2;
+
+        //         time=time<0.8?0.8:time;
+        //         time=time>2?2:time;
+        //         type="Linear";
+        //         touchTostop(type,target,time);
+        //         if(target>0){
+        //             target=0;
+        //             type="back";
+        //             touchTostop(type,target,time);
+        //           //  bsr="cubic-bezier(.02,.84,.7,1.53)";
+        //         }else if(target<minY){
+        //             target=minY;
+        //             type="back";
+        //           //  bsr="cubic-bezier(.02,.84,.7,1.53)";
+        //           touchTostop(type,target,time);
+        //         }
+        //         //listUl.style.transition="10s "+bsr+" transform";
+        //         //listUl.style.transition=time+"s "+bsr+" transform";
+        //        // pedesis.transfromCss(listUl,"translateY",target);
+                
+        //         }else{
+        //             listUl.style.transition="1s transform";
+        //             if(translateY>0){
+        //                 translateY=0;
+        //         }else if(translateY<minY){
+        //             translateY=minY;
+                    
+        //         }
+        //         pedesis.transfromCss(listUl,"translateY",translateY);
+        //         if(callBack && typeof callBack["end"]=="function"){
+        //             callBack["end"].call(listUl);
+                    
+        //         }
+               
+        //         }
+
+        //     })
+        //     function touchTostop(type,target,time){
+        //         clearInterval(clear);
+        //             var t=0;
+        //             var b=pedesis.transfromCss(listUl,"translateY");
+        //             var c=target-b;
+        //             var d=time*1000/(1000/60)
+        //         clear=setInterval(function(){
+        //             t++;
+        //             		/*
+        //                     t:当前是哪一次
+        //                     b:初始位置
+        //                     c:最终位置与初始位置之间的差值
+        //                     d:总次数
+        //                     */
+        //         if(callBack && typeof callBack["move"]=="function"){
+        //             callBack["move"].call(listUl);
+                    
+        //         }
+
+        //             if(t>d){
+        //                 clearInterval(clear);
+        //                 if(callBack && typeof callBack["end"]=="function"){
+        //             callBack["end"].call(listUl);
+                    
+        //         }
+        //             }
+        //            var point=Tween[type](t,b,c,d);
+        //             pedesis.transfromCss(listUl,"translateY",point);
+        //         },1000/60)
+        //     }
+        // }
+
+</script>
+</html>

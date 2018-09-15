@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    *{
+        padding:0;
+        margin:0;
+    }
+    html,body{
+        height: 100%;
+        overflow: hidden;
+    }
+    #wrap{
+        position:absolute;
+        left:0;
+        bottom:0;
+        width: 100%;
+        text-align: center;
+    }
+    #wrap>img{
+    width: 64px;
+    }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <img src="images/1.png" alt="">
+        <img src="images/2.png" alt="">
+        <img src="images/3.png" alt="">
+        <img src="images/4.png" alt="">
+        <img src="images/5.png" alt="">
+    </div>
+</body>
+<script>
+var img=document.querySelectorAll("#wrap>img");
+document.onmousemove=function(e){
+    var e=e||event;
+    var r=320;
+   
+   // console.log(imgNodes[0].getBoundingClientRect());
+    for(var i=0;i<img.length;i++){
+        var l=img[i].getBoundingClientRect().x+img[i].offsetWidth/2-e.clientX;
+        var t=img[i].getBoundingClientRect().y+img[i].offsetHeight/2-e.clientY;
+         var c=Math.sqrt(l*l+t*t);
+         if(c>=r){
+         c=r;
+    }
+        img[i].style.width=128-(64/r*c)+"px";
+    }
+}
+</script>
+</html>

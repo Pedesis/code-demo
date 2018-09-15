@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+            background: pink;
+        }
+
+        canvas {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;
+            background: #fff;
+        }
+    </style>
+
+</head>
+
+<body>
+    <canvas width="400" height="400">
+    </canvas>
+</body>
+<script>
+    var canvas = document.querySelector("canvas");
+    if (canvas.getContext) {
+        var arr = [];
+        var ctx = canvas.getContext("2d");
+        //画圆
+
+        setInterval(function () {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            console.log(arr);
+            for (var i = 0; i < arr.length; i++) {
+                if(arr[i].o<0){
+                    arr.splice(i,1);
+                }
+               
+                arr[i].r++
+                arr[i].o-=0.01;
+                
+                ctx.save();
+                ctx.fillStyle="rgba("+arr[i].red+","+arr[i].green+","+arr[i].blue+","+arr[i].o+")";
+                ctx.beginPath();
+                ctx.arc(arr[i].x, arr[i].y, arr[i].r, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.restore();
+
+            }
+
+        },1000/60)
+
+
+
+        //添加圆的数组
+        setInterval(function () {
+            var x = Math.random() * canvas.offsetWidth;
+            var y = Math.random() * canvas.offsetHeight;
+            var r = 10;
+            var red=Math.round(Math.random() *255);
+            var green=Math.round(Math.random() *255);
+            var blue=Math.round(Math.random() *255);
+            var o=1;
+            arr.push({
+                x: x,
+                y: y,
+                r: r,
+                red:red,
+                green:green,
+                blue:blue,
+                o:o
+            })
+        }, 100)
+
+    }
+
+</script>
+
+</html>

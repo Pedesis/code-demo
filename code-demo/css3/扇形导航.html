@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    *{
+        padding:0;
+        margin:0;
+    }
+    .wrap{
+        position: fixed;
+        right:20px;
+        bottom: 20px;
+        width: 50px;
+        height: 50px;
+    }
+    .inner>img{
+        position: absolute;
+        left:0;
+        top:0;
+        width:50px;
+        height:50px;
+        border-radius: 50%;
+    }
+    .home{
+        position: absolute;
+        left:0;
+        top:0;
+        z-index: 1;
+        width: 50px;
+        height: 50px;
+        background:url(images/home.png) no-repeat;
+        border-radius: 50%;
+        transition: 1s;
+
+    }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="inner">
+             <img src="images/clos.png" alt="" srcset="">
+             <img src="images/full.png" alt="" srcset="">
+             <img src="images/open.png" alt="" srcset="">
+             <img src="images/prev.png" alt="" srcset="">
+             <img src="images/refresh.png" alt="" srcset="">
+        </div>
+        <div class="home">
+        </div>
+    </div>
+</body>
+<script>
+var home=document.querySelector(".home");
+var img=document.querySelectorAll("img");
+flag=true;
+function fn(){
+         this.style.transition="0.3s";
+        this.style.transform="rotate(720deg) scale(1)";
+        this.style.opacity=1; 
+        this.removeEventListener("transitionend",fn);
+}
+for(var i=0;i<img.length;i++){
+    img[i].onclick=function(){
+        this.style.transition="0.5s";
+        this.style.transform="rotate(720deg) scale(2)";
+        this.style.opacity=0.1;
+        this.addEventListener("transitionend",fn);
+    }
+}
+
+home.onclick=function(){
+    if(flag==true){
+        home.style.transform="rotate(-720deg)";
+        for(var i=0;i<img.length;i++){
+         img[i].style.transition="1s "+i*0.1+"s";
+         img[i].style.transform="rotate(720deg) scale(1)";
+         img[i].style.left=-sc(150,90*i/(img.length-1)).x+"px";
+         img[i].style.top=-sc(150,90*i/(img.length-1)).y+"px";
+    }
+    
+   }else{
+    home.style.transform="rotate(0deg)";
+    for(var i=0;i<img.length;i++){
+        img[i].style.transform="rotate(0deg) scale(1)";
+         img[i].style.transition="1s "+(img.length-i)*0.1+"s";
+         img[i].style.left=0;
+         img[i].style.top=0;
+    }
+   }
+   flag=!flag;
+
+
+
+
+}
+function sc(a,deg){
+    var b=Math.round(Math.sin(deg*Math.PI/180)*a);
+    var c=Math.round(Math.cos(deg*Math.PI/180)*a);
+    return {x:b,y:c};
+
+}
+
+</script>
+</html>

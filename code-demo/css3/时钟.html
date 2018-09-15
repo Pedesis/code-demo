@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    *{
+        padding:0;
+        margin:0;
+    }
+    ul{
+        list-style: none;
+    }
+    .wrap{
+        position:absolute;
+        left:50%;
+        top:50%;
+        /* transform: translate(-50%,-50%); */
+        margin-top:-101px;
+        margin-left:-101px;
+        width: 200px;
+        height: 200px;
+        border:1px solid;
+        border-radius: 50%;
+    }
+    ul>li{
+        position:absolute;
+        top:0;
+        left: 100px;
+        width:2px;
+        height: 6px;
+        background:black; 
+        transform-origin: 0 100px;
+    }
+    .wrap>ul>li:nth-child(5n+1){
+        height: 10px;
+    }
+    .hour{
+        position: absolute;
+        top:66px;
+        left: 97px;
+        width:6px;
+        height: 34px;
+        background:black;
+        transform-origin: center bottom;
+       
+    }
+    .min{
+        position: absolute;
+        top:50px;
+        left: 98px;
+        width:4px;
+        height: 50px; 
+        background:black;
+        transform-origin:  center bottom;
+    }
+    .second{
+        position: absolute;
+        top:30px;
+        left: 99px;
+        width: 2px;
+        height: 70px;
+        background:red;
+        transform-origin:  center bottom;
+    }
+    .icons{
+        position: absolute;
+        top:90px;
+        left: 90px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background:pink;
+    }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <ul>
+        </ul>
+        <div class="hour"></div>
+        <div class="min"></div>
+        <div class="second"></div>
+        <div class="icons"></div>
+    </div>
+</body>
+<script>
+var ulNode=document.querySelector(".wrap>ul");
+var cssNode=document.createElement("style");
+var hour=document.querySelector(".hour");
+var min=document.querySelector(".min");
+var second=document.querySelector(".second");
+document.head.appendChild(cssNode);
+var cssN="";
+var liHt="";
+for(var i=0;i<60;i++){
+   liHt+="<li></li>";
+   cssN+="ul>li:nth-child("+(i+1)+"){transform: rotate("+i*6+"deg);}"
+}
+ulNode.innerHTML=liHt;
+cssNode.innerHTML=cssN;
+move();
+setInterval(move,1000)
+function move(){
+    var date=new Date();
+    var s=date.getSeconds();
+    var m=date.getMinutes()+s/60;
+    var h=date.getHours()+m/60;
+    hour.style.transform="rotate("+(h*30)+"deg)";
+     min.style.transform="rotate("+(m*6)+"deg)";
+     second.style.transform="rotate("+(s*6)+"deg)";
+}
+
+</script>
+</html>

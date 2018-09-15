@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    *{
+        padding:0;
+        margin:0;
+    }
+    li{
+        list-style: none;
+    }
+    .wrap{
+        width: 300px;
+        height: 400px;
+        margin:200px auto;
+        overflow: hidden;
+        position: relative;
+    }
+    ul{
+        width: 1500px;
+        height: 400px; 
+        position: absolute;
+        left:0;
+        top:0;
+    }
+    li{
+        width: 300px;
+        height: 400px; 
+        display: block;
+        float: left;
+    }
+    img{
+        width: 300px;
+        height: 400px;
+    }
+    .bu{
+        position: absolute;
+        bottom: 15px;
+        left:50%;
+        transform: translateX(-50%);
+        
+    }
+    .bu>a{
+        width: 10px;
+        height: 10px;
+        display: block;
+        background: green;
+        float: left;
+        margin-right:5px;
+    }
+    .bu>a:hover{
+        background: red;
+    }
+   
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <ul>
+            <li><img src="images/1.jpeg" alt=""></li>
+            <li><img src="images/2.jpeg" alt=""></li>
+            <li><img src="images/3.jpeg" alt=""></li>
+            <li><img src="images/4.jpeg" alt=""></li>
+            <li><img src="images/1.jpeg" alt=""></li>
+        </ul>
+       <div class="bu">
+           <a href="javascript:;" data-number="0" style="background:red"></a>
+           <a href="javascript:;" data-number="1"></a>
+           <a href="javascript:;" data-number="2"></a>
+           <a href="javascript:;" data-number="3"></a>
+       </div>
+    </div>
+</body>
+<script>
+var ul=document.querySelector("ul");
+var aNode=document.querySelectorAll(".bu>a");
+var li=document.querySelectorAll("li");
+var flag=0;
+var index=0;
+//移动
+function move(){
+    index++;
+    flag=-index*300;
+    if(index>3){
+        index=0;
+        aNode[index].style.background="red";
+    }
+   
+    ul.style.left=flag+"px";
+    
+    changecolor();
+}
+timer=setInterval("move()",3000);
+
+//停止
+// for(var i=0;i<li.length;i++){
+//     li[i].onmouseenter=function(){
+//         //console.log(i);
+//         clearInterval(timer);
+//     }
+//     li[i].onmouseleave=function(){
+//         timer=setInterval("move()",1000);
+//     }
+// }
+//a标签设置
+//用data或给array添加属性取值，arr[i].num;
+for(var i=0;i<aNode.length;i++){
+    aNode[i].onclick=function(){
+        clearInterval(timer);
+        timer=setInterval("move()",3000);
+        ul.style.left=-300*this.dataset.number+"px";  
+        index=this.dataset.number;
+           changecolor();
+        //console.log(ul.style.left);
+       // console.log(this.dataset.number);
+    }
+}
+//改变a的颜色
+function changecolor(){
+   //console.log(index);
+   for(var i=0;i<aNode.length;i++){
+       if(i==index){
+        aNode[i].style.background="red";
+       }else{
+        aNode[i].style.background="";
+       }
+   }
+   
+}
+
+</script>
+</html>

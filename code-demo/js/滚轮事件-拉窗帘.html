@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .wrap {
+            width: 100%;
+            height: 300px;
+            background: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap"></div>
+</body>
+<script>
+    var div = document.querySelector(".wrap");
+    if (div.addEventListener) {
+        div.addEventListener("DOMMouseScroll", fn);
+    }
+    div.onmousewheel = fn;
+    function fn(e) {
+        e = e || event;
+        var dir = "";
+        if (e.wheelDelta) {
+            dir = e.wheelDelta > 0 ? "up" : "down";//非火狐
+        }
+        if (e.detail) {
+            dir = e.detail < 0 ? "up" : "down";//火狐
+        }
+        switch (dir) {
+            case "up":
+                div.style.height = div.offsetHeight - 10 + "px";
+                //...
+                break;
+            case "down":
+                div.style.height = div.offsetHeight + 10 + "px";
+                //....
+                break;
+        }
+
+        //禁止事件的默认行为  dom2
+        if (e.preventDefault) {
+            e.preventDefault();
+        }
+
+
+        //禁止事件的默认行为  dom0
+        return false;
+    }
+</script>
+
+</html>

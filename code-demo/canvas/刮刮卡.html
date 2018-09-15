@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    html,body{
+        height:100%;
+        overflow: hidden;
+    }
+    #wrap,ul,li{
+      height: 100%;
+      overflow: hidden;
+    }
+    li{
+        background:url(b.jpg);
+        background-size: 100% 100%;/*相对市口*/
+    }
+    #can{
+       position: absolute;
+       left: 0;
+       top:0;
+       right:0;
+       bottom:0;
+       transition: 1s;
+    }
+    
+    </style>
+</head>
+<body>
+    <div id="wrap">
+          <canvas id="can"></canvas>
+        <ul>
+            <li></li>
+        </ul>
+    </div>
+   
+  
+</body>
+<script>
+    /*           必须在服务器端运行                     */
+var canvas=document.getElementById("can");
+if(canvas.getContext){
+    //debugger
+    var ctx=canvas.getContext("2d");
+    canvas.width=document.documentElement.clientWidth;
+    canvas.height=document.documentElement.clientHeight;
+ var img=new Image();
+ img.src="a.jpg";
+ img.onload=function(){
+     draw();
+ }
+   
+
+}
+function draw(){
+    var flag=0
+    ctx.drawImage(img,0,0,canvas.width,canvas.height);
+    ctx.globalCompositeOperation="destination-out";
+    ctx.lineCap="round";
+     ctx.lineJoin="round";
+     ctx.lineWidth=40; 
+canvas.addEventListener("touchstart",function(e){
+    //debugger
+       e=e||event;
+       var touch=e.changedTouches[0];
+       var x=touch.clientX-this.offsetLeft;
+       var y=touch.clientY-this.offsetTop;
+       //console.log(x,y);
+       ctx.save();
+       ctx.beginPath();
+       ctx.lineWidth=40;  
+       ctx.moveTo(x,y)
+       ctx.lineTo(x+1,y+1);
+       ctx.stroke();
+      ctx.restore();
+})
+
+canvas.addEventListener("touchmove",function(e){
+    //debugger
+       e=e||event;
+       var touch=e.changedTouches[0];
+       var x=touch.clientX-this.offsetLeft;
+       var y=touch.clientY-this.offsetTop;
+       //console.log(x,y);
+      // ctx.beginPath();
+      ctx.save();
+      
+       ctx.lineTo(x,y);
+       ctx.stroke();
+       ctx.restore();
+})
+canvas.addEventListener("touchend",function(){
+    //debugger
+      // e=e||event;
+       //var touch=e.changedTouches[0];
+        //   debugger
+      var imgData=ctx.getImageData(0,0,canvas.width,canvas.height);
+      var all=imgData.width*imgData.height;
+      for(var i=0;i<all;i++){
+          if(imgData.data[4*i+3]==0){
+              flag++;
+           //   console.log(flag);
+          }
+      }
+       if(flag>=all/2){
+           canvas.style.opacity=0;
+       }
+
+})
+canvas.addEventListener("transitionend",function(){
+    this.remove();
+})
+
+}
+
+</script>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            background: gray;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #can {
+            background-color: #fff;
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="can" width="400" height="532"></canvas>
+</body>
+<script>
+    //在浏览器环境才行，否则canvas报错
+    var canvas = document.getElementById("can");
+    if (canvas.getContext) {
+        var ctx = canvas.getContext("2d");
+        var img=new Image();
+        img.src="1F.jpg";
+       //draw(img);
+        img.onload=function(){
+       // console.log(draw());
+        //引入图像
+         var w=canvas.width;
+        draw(img,ctx,w);
+      
+     //引入背景
+   //  ctx.save();
+        //  var pattern=ctx.createPattern(img,"no-repeat");
+        //  ctx.fillStyle=pattern;
+        //  ctx.fillRect(0,0,500,500);
+        // ctx.restore(); 
+        }
+        
+        // ctx.save();
+        // ctx.fillStyle="pink";
+        // ctx.beginPath();
+        // ctx.fillRect(0,0,100,100);
+        // ctx.fill();
+        // ctx.restore();
+
+        
+        
+    }
+    function draw(img,ctx,w){
+        ctx.drawImage(img,0,0);
+       // console.log(1)
+        var oldimgData=ctx.getImageData(0,0,img.width,img.height);
+        var newimgData=ctx.createImageData(img.width,img.height);
+             //console.log(img.width,img.height);
+            var d=oldimgData.data;
+            var f=newimgData.data;
+            var size=10;
+        for(var i=0;i<oldimgData.width/size;i++){
+            for(var j=0;j<oldimgData.height/size;j++){
+                var color=getinf(d,i*size+Math.floor(Math.random()*size),j*size+Math.floor(Math.random()*size),w);
+                //console.log(color);
+                for(var a=0;a<size;a++){
+                    for(var b=0;b<size;b++){
+                        setinf(f,i*size+a,j*size+b,color,w);
+                        //console.log(color[0]);
+                        //console.log(f);
+                    }
+                }
+            }
+        }
+        console.log(newimgData);
+
+            ctx.putImageData(newimgData,0,img.height);
+
+    }
+   function getinf(data,x,y,w){
+   // var w=canvas.width;
+  var color=[];
+    //r
+    //console.log(color);
+    color[0]=data[(y*w+x)*4];
+    //g
+    color[1]=data[(y*w+x)*4+1];
+    //b
+    color[2]=data[(y*w+x)*4+2];
+    //a
+    color[3]=data[(y*w+x)*4+3];
+    return color;
+   }
+   function setinf(data,x,y,color,w){
+
+         //r
+    data[(y*w+x)*4]=color[0];
+    //g
+    data[(y*w+x)*4+1]=color[1];
+    //b
+    data[(y*w+x)*4+2]=color[2];
+    //a
+    data[(y*w+x)*4+3]=color[3]; 
+   }
+</script>
+
+</html>

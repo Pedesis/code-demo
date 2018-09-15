@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/video.css">
+</head>
+
+<body>
+    <div class="wrap">
+        <video src="480.mp4" class="video"></video>
+        <div class="progress">
+            <div class="p-icon">
+                <span class="start"></span>
+                <span class="stop"></span>
+            </div>
+            <div class="bar">
+                    <div class="slipper">
+                        <div class="inner"></div>
+                    </div>
+                    <div class="half"></div>
+            </div>
+            <div class="vol">
+                <div class="time">
+                    <span></span>/<span></span>
+                </div>
+                <div class="sound">
+                    <div class="switch">
+                        <span></span>
+                    </div>
+                    <div class="bar">
+
+                            <div class="slipper"><div class="inner"></div></div>
+                            <div class="half"></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+<script>
+    window.onload = function () {
+        var video = document.querySelector(".video");
+        var progress = document.querySelector(".wrap>.progress");
+        var inner=document.querySelectorAll(".inner");
+       // console.log(inner);
+      var  half=document.querySelectorAll(".half");
+        video.width = document.documentElement.clientWidth;
+        video.height = document.documentElement.clientHeight - progress.offsetHeight;
+        window.onresize=function(){
+            if(document.documentElement.clientWidth>=600){
+                video.width = document.documentElement.clientWidth;
+        video.height = document.documentElement.clientHeight - progress.offsetHeight; 
+    }    
+    }
+    var back={
+        move:function(){
+            half[0].style.width=inner[0].offsetLeft+"px";
+        }
+    }
+    var back2={
+        move:function(){
+            half[1].style.width=inner[1].offsetLeft+"px";
+        }
+    }
+
+      drive(inner[0],back);
+       drive(inner[1],back2);
+    //   debugger
+          
+        }
+function drive(div,back){
+     var elementpoint={x:0,y:0};
+     var startpoint={x:0,y:0};
+    div.onmousedown=function(e){
+        //alert(123);
+   
+    e=e||window.event;
+     elementpoint.x=this.offsetLeft;
+     elementpoint.y=this.offsetTop;
+     startpoint.x=e.clientX;
+     startpoint.y=e.clientY;
+     if ( div.setCapture ) {
+    div.setCapture();
+        }
+  //  console.log(x,y);
+    document.onmousemove=function(e){
+        e=e||window.event;
+        var nowpoint={x:0,y:0};
+        nowpoint.x=e.clientX;
+        nowpoint.y=e.clientY;
+        var L=elementpoint.x+nowpoint.x-startpoint.x;
+        var T=elementpoint.y+nowpoint.y-startpoint.y;
+         if(L<0){
+             L=0;
+         }else if(L>div.offsetParent.offsetWidth-div.clientWidth){
+             L=div.offsetParent.offsetWidth-div.clientWidth;
+         }
+        div.style.left=L+"px";
+        //div.style.top=e.clientY-y+"px";
+        //console.log(div.style.left)
+        if(back&&back["move"]&&typeof back["move"]==="function"){
+            back["move"]();
+        }
+    }
+    document.onmouseup = function() {
+            document.onmousemove = document.onmouseup = null;
+            //释放全局捕获 releaseCapture();
+            if (div.releaseCapture ) {
+                div.releaseCapture();
+            }
+        }
+         
+        return false;
+}
+
+
+}
+ 
+</script>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    *{
+        padding:0;
+        margin:0;
+    }
+    html,body{
+        overflow: hidden;
+        height: 100%;
+    }
+    .tuzi{
+        position: absolute;
+        left: 0;
+        top:0;
+        bottom:0;
+        right:0;
+        margin:auto;
+        width: 48px;
+        height: 48px;
+        background:url(images/animation.png) no-repeat;
+        background-position: 0 0;
+        animation: move 1s steps(12,end)  infinite;
+    }
+    @keyframes move{
+        from{
+            background-position: 0 0;
+        }to{
+            background-position: -576px 0;
+        }
+    }
+    </style>
+</head>
+<body>
+    <div class="tuzi">
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    *{
+        padding:0;
+        margin:0;
+    }
+    body,html{
+        height: 100%;
+        overflow: hidden;
+    }
+    #wrap{
+        position:absolute;
+        left:0;
+        top:0;
+        right:0;
+        bottom:0;
+        /* transform: translate(-50%,-50%); */
+        margin:auto;
+        width: 400px;
+        height: 400px;
+        border:1px solid;
+        perspective: 1000px;
+        background:gray;
+    }
+    #wrap>.inner{
+        position:absolute;
+        left:0;
+        top:0;
+        right:0;
+        bottom:0;
+        margin:auto; 
+        width: 100px;
+        height: 100px;
+        transition: 3s transform;
+        transform-style: preserve-3d;
+       
+    }
+    #wrap>.inner>div{
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background:rgba(111, 222,232, .3);
+        font:50px/100px "微软雅黑";
+        text-align: center;
+        backface-visibility: hidden;
+       
+      
+    }
+    #wrap:hover .inner{
+      transform: rotate3d(0,1,0,240deg);
+
+    } 
+    </style>
+</head>
+<body>
+    <div id="wrap">
+       <div class="inner">
+
+       </div>
+
+    </div>
+</body>
+<script>
+
+     window.onload=function(){
+    polygon(10,100);
+  }
+    function polygon(n,width){
+        var inner=document.querySelector(".inner");
+     var css=document.createElement("style");
+    var inText="";
+    var cssText="";
+        //外角
+      var angle= 360/n;
+       //中心点
+    var center=-Math.tan((180-360/n)/2*Math.PI/180)*width/2;
+    for(var i=0;i<n;i++){
+    inText+="<div>"+(i+1)+"</div>"
+    cssText+="#wrap> .inner > div:nth-child("+(i+1)+"){transform:rotateY("+angle*i+"deg);}";
+    }
+    inner.innerHTML=inText;
+    
+    cssText+="#wrap > .inner{transform-origin:center center "+center+"px;}";
+    cssText+="#wrap > .inner > div{transform-origin:center center "+center+"px;}";
+   
+    
+    
+    css.innerHTML=cssText;
+    document.head.appendChild(css);
+    }
+  
+ 
+
+</script>
+</html>

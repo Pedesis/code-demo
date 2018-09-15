@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #wrap {
+            height: 100%;
+            overflow: hidden;
+
+        }
+
+        #wrap>.carousel-wrap {
+            position: relative;
+        }
+
+        #wrap>.carousel-wrap>ul {
+            position: absolute;
+            list-style: none;
+            overflow: hidden;
+            /* transform: rotateX(180deg); */
+        }
+
+        #wrap>.carousel-wrap>ul>li {
+            float: left;
+        }
+
+        #wrap>.carousel-wrap>ul>li>a>img {
+            width: 100%;
+        }
+
+        #wrap>.carousel-wrap>ul>li>a,
+        #wrap>.carousel-wrap>ul>li>a>img {
+            display: block;
+        }
+
+        #wrap>.carousel-wrap>.carousel-point {
+            position: absolute;
+            bottom: 0;
+            text-align: center;
+            z-index: 1;
+            width: 100%;
+        }
+
+        #wrap>.carousel-wrap>.carousel-point>span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: green;
+            border-radius: 5px;
+            margin-right: 5px;
+        }
+
+        #wrap>.carousel-wrap>.carousel-point>span.active {
+            background: deeppink;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <div class="carousel-wrap" needMove >
+            <div class="carousel-point" ></div>
+        </div>
+    </div>
+    <script src="js/transform.js"></script>
+</body>
+<script>
+
+    window.onload = function () {
+        document.addEventListener("touchstart", function (e) {
+            e = e || event;
+            e.preventDefault();
+        })
+        var arr = ["01.jpg", "02.jpg", "03.jpg", "04.jpg", "05.jpg"];
+        pedesis.carouselimg(arr);
+        
+    }
+</script>
+
+</html>

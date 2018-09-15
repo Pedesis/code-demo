@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    *{
+        padding:0;
+        margin:0;
+    }
+    div{
+        background: #000;
+        width: 300px;
+        height: 200px;
+        position: absolute;
+    }
+    </style>
+</head>
+<body>
+    <div></div>
+</body>
+<script>
+var div=document.querySelector("div");
+div.onmousedown=function(e){
+    if ( div.setCapture ) {
+        //针对ie
+    div.setCapture();
+        }
+    e=e||window.event;
+    var x=e.clientX-this.offsetLeft;
+    var y=e.clientY-this.offsetTop;
+  //  console.log(x,y);
+    document.onmousemove=function(e){
+        e=e||window.event;
+        
+        div.style.left=e.clientX-x+"px";
+        div.style.top=e.clientY-y+"px";
+        console.log(div.style.left)
+    }
+    document.onmouseup = function() {
+            document.onmousemove = document.onmouseup = null;
+            //释放全局捕获 releaseCapture();
+            if (div.releaseCapture ) {
+                div.releaseCapture();
+            }
+        }
+         
+        return false;
+}
+
+</script>
+</html>

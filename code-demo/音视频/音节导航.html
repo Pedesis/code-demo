@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    *{
+        padding: 0;
+        margin:0;
+    }
+    li{
+        float: left;
+        list-style: none;
+        display:block;
+        width: 100px;
+        text-align: center;
+        border-right: 1px solid black;
+        height: 100px;
+        line-height: 100px;
+    }
+    li:last-child{
+        border: 0;
+    }
+    #wrap{
+        width:520px;
+        height: 200px;
+        margin:200px auto;
+        background:pink;
+    }
+    ul{
+        width:504px;
+        height: 100px;
+        border:1px solid black;
+        overflow: hidden;
+    }
+    .bot{
+        background: greenyellow;
+        width: 100px;
+        height: 100px;
+        transition: 1s;
+    }
+    li:hover .bot{
+      transform: translateY(-100px);
+    }
+    </style>
+</head>
+<body>
+
+    <div id="wrap">
+        <audio id="au" ></audio>
+        <ul>
+            <li>
+                <div class="top">1</div>
+                <div class="bot"></div>
+            </li>
+            <li>
+                <div class="top" flag="b">2</div>
+                <div class="bot"></div>
+            </li>
+            <li>
+                <div class="top">3</div>
+                <div class="bot"></div>
+            </li>
+            <li>
+                <div class="top" flag="d">4</div>
+                <div class="bot"></div>
+            </li>
+            <li>
+                <div class="top">5</div>
+                <div class="bot"></div>
+            </li>
+        </ul>
+    </div>
+</body>
+<script>
+    var audio=document.getElementById("au");
+    var li=document.querySelectorAll("li");
+   // console.log(audio,li[2]);
+    for(var i=0;i<li.length;i++){
+        li[i].onmouseenter=function(){
+            var flag=this.getAttribute("flag");
+        //debugger
+        if(flag){
+            audio.src="Http://s8.qhimg.com/share/audio/piano1/"+flag+"4.mp3";
+        //alert(1);
+        audio.play();
+        }
+  
+}
+    }
+   
+
+</script>
+</html>
