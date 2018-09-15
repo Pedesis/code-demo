@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            padding:0;
+            margin:0;
+        }
+    img{
+       display: block;
+       height: 1000px;
+    }
+    </style>
+</head>
+<body>
+    <!-- <div id="sds">sdsdsd</div> -->
+    <img src="" alt=""  class="img" lazyload="true" data-original="images/1.jpeg">
+    <img src="" alt=""  class="img" lazyload="true" data-original="images/2.jpeg">
+    <img src="" alt=""  class="img" lazyload="true" data-original="images/3.jpeg">
+    <img src="" alt=""  class="img" lazyload="true" data-original="images/4.jpeg">
+</body>
+<script>
+var viewHeight = document.documentElement.clientHeight;
+
+lazyload();
+function lazyload(){
+    
+    var eles = document.querySelectorAll('img[data-original][lazyload]');
+    Array.prototype.forEach.call(eles,function(item,index){
+        var rect;
+        //console.log(viewHeight,sds.getBoundingClientRect());
+        if(item.dataset.original==="")
+        return;
+        rect=item.getBoundingClientRect();
+        console.log(rect,Array);
+        if (rect.bottom >= 0 && rect.top < viewHeight) {
+        !function () {
+        var img = new Image()
+        img.src = item.dataset.original
+        img.onload = function () {
+          item.src = img.src
+        }
+        item.removeAttribute('data-original')
+        item.removeAttribute('lazyload')
+      }()
+        }
+    });
+   
+}
+document.addEventListener('scroll', lazyload);
+</script>
+</html>

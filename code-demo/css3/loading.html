@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    *{
+        padding:0;
+        margin:0;
+    }
+    .wrap{
+        width: 600px;
+        height: 200px;
+        border:1px solid;
+        
+    }
+    .wrap>div{
+        width: 10px;
+        height: 60px;
+        background:green;
+        margin:50px 10px;
+        float: left;
+        animation:loading 1s  ease-in-out infinite;
+    }
+    .wrap>div.item1{
+        margin-left: 50px;
+        animation-delay: -1.1s;/*跳过负时间的动画*/
+    }
+    .wrap>div.item2{
+        animation-delay: -1s;
+    }
+    .wrap>div.item3{
+        animation-delay: -0.9s;
+    }
+    .wrap>div.item4{
+        animation-delay: -0.8s;
+    }
+    .wrap>div.item5{
+        animation-delay: -0.7s;
+    }
+    @keyframes loading{
+        0%,40%,100%{
+            transform: scaleY(0.4)
+        }
+        20%{
+            transform: scaleY(1);
+        }
+    }
+    .circle{
+        
+        margin:200px;
+    }
+    .inner{
+        width:100px;
+        height: 100px;
+        border:10px solid gray;
+        border-left-color: green;
+        border-radius: 50%;
+        animation: toCircle 1s infinite;
+    }
+    @keyframes toCircle{
+        0%{
+            transform: rotate(0deg);
+        }
+        100%{
+            transform: rotate(360deg); 
+        }
+    }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="item1"></div>
+        <div class="item2"></div>
+        <div class="item3"></div>
+        <div class="item4"></div>
+        <div class="item5"></div>
+    </div>
+    <div class="circle">
+        <div class="inner">
+        </div>
+    </div>
+</body>
+</html>
