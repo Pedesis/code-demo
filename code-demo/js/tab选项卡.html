@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    *{
+        padding:0;
+        margin:0;
+    }
+    .wrap>ul>li{
+        float: left;
+        display: block;
+        border:1px solid ;
+
+    }
+    .wrap>ul>li.active{
+        background:red;
+    }
+    .wrap>ul::after{
+        display:block;
+        clear:both;
+         content:"";
+        visibility:hidden;
+        height:0;
+
+    }
+    .tobox>div{
+        width: 200px;
+        height: 200px;
+        display: none;
+        background:green;
+    }
+    .tobox>div:nth-child(1){
+        display: block;
+
+    }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <ul>
+            <li class="active">体育</li>
+            <li>娱乐</li>
+            <li>教育</li>
+        </ul>
+        <div class="tobox">
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+        </div>
+    </div>
+</body>
+<script>
+var liNodes=document.querySelectorAll("li");
+var divNodes=document.querySelectorAll(".tobox>div");
+for(var i=0;i<liNodes.length;i++){
+    liNodes[i].index=i;
+    liNodes[i].onclick=function(){
+        for(var i=0;i<liNodes.length;i++){
+            liNodes[i].classList.remove("active");
+            divNodes[i].style.display="none";
+        }
+        this.classList.add("active");
+        divNodes[this.index].style.display="block";
+    }
+}
+</script>
+</html>
