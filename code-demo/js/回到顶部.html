@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    
+    *{
+        padding: 0;
+        margin:0;
+    }
+ 
+    #icon{
+        position: fixed;
+        right: 10px;
+        bottom: 30px;
+        display: none;
+    }
+    </style>
+    
+</head>
+<body>
+    <div id="wrap"> 
+    </div>
+    <div id="icon">回到顶部</div>
+</body>
+<script>
+
+for(var i=0;i<200;i++){
+    wrap.innerHTML+=i+"</br>";
+}
+window.onscroll=function(){
+    var cHeight=document.documentElement.clientHeight||document.body.clientHeight;
+    if(Math.abs(wrap.getBoundingClientRect().y)>cHeight){
+        icon.style.display="block";
+        icon.onclick=function(){
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
+        }
+    }else{
+        icon.style.display="none";
+    }
+}
+</script>
+</html>

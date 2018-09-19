@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    *{
+        padding:0;
+        margin:0;
+    }
+    .title{
+        border-bottom: 1px solid;
+    }
+    li{
+        list-style: none;
+        border-bottom: 1px solid;
+    }
+    </style>
+</head>
+<body>
+    <!-- api.douban.com/book/subjects?q=javascript&alt=xd&callback=pedesis -->
+    <!-- https://api.douban.com/v2/movie/in_theaters -->
+    
+        <input type="text">
+        <input type="button" value="搜索">
+    <div class="title"></div>
+    <ul>
+        <li></li>
+    </ul>
+</body>
+<script>
+window.onload=function(){
+    var subIn=document.querySelector("input[type=button]");
+    var textIn=document.querySelector("input[type=text]");
+    var title=document.querySelector(".title"); 
+    var ulNode=document.querySelector("ul");
+    subIn.onclick=function(){
+        ulNode.innerHTML="";
+        if(textIn.value!=""){
+            var oScript=document.createElement("script");
+            oScript.src="http://api.douban.com/book/subjects?q="+textIn.value+"&alt=xd&callback=pedesis";
+            //console.log(textIn.value);
+            document.body.appendChild(oScript);
+        }
+       return false;
+    }
+}
+function pedesis(data){
+   var otitle=document.querySelector(".title");
+   var ulNode=document.querySelector("ul");
+   otitle.innerHTML=data.title['$t']+"共"+data["opensearch:totalResults"]['$t'];
+   var dx=data.entry;
+   for(var i=0;i<dx.length;i++){
+       ulNode.innerHTML+="<li><image src='"+dx[i].link[2]["@href"]+"'><p>"+dx[i].title.$t+"</p></li>";
+   }
+}
+</script>
+</html>

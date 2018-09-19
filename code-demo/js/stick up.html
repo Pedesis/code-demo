@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    *{
+        padding:0;
+        margin:0;
+    }
+    .header{
+        height: 200px;
+        background:darksalmon;
+    }
+    .nav{
+        height: 100px;
+        background:green;
+        color:white;
+    }
+    .content{
+        height: 800px;
+        background:gray;
+    }
+    .footer{
+        height: 300px;
+        background:red;
+        border:transparent;
+    }
+    #nav2{
+        position: fixed;
+        z-index: 100;
+        display: none;
+        left:0;
+        top:0;
+        width: 100%;
+    }
+    </style>
+</head>
+<body>
+    <div class="header"></div>
+    <div class="nav">nav</div>
+    <!-- <div class="nav nav2"></div> -->
+    <div class="content"></div>
+    <div class="footer"></div>
+</body>
+<script>
+var nav=document.querySelector(".nav");
+var y=nav.offsetTop;
+creatNav();
+    function creatNav(){
+            var oNav=document.createElement("div");
+            oNav.classList.add("nav");
+            oNav.id="nav2";
+            document.body.appendChild(oNav);
+           // console.log(nav2);
+    }
+window.onscroll=function(){
+    var scrollT=document.documentElement.scrollTop||document.body.scrollTop;
+    //var navNode=document.querySelector(".nav");
+    var headTop=document.querySelector(".header").offsetHeight;
+    if(scrollT>=headTop){
+        nav.style.visibility="hidden";
+        nav2.style.display="block";
+  
+
+    }else{
+        nav.style.visibility="visible";
+        nav2.style.display="none";
+    }
+}
+
+
+</script>
+</html>
