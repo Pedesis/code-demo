@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    *{
+        padding:0;
+        margin:0;
+    }
+    html,body{
+        height: 100%;
+        width: 100%;
+        background: yellow;
+    }
+    .wrap div{
+        margin: 20px 20px;
+        float: left;
+        width: 100px;
+        height: 100px;
+    }
+    .wrap .color-change:nth-child(1){
+        background: green;
+
+    }
+    .wrap .color-change:nth-child(2){
+        background: red;
+        
+    }
+    .wrap .color-change:nth-child(3){
+        background: blue;
+        
+    }
+    .wrap .color-change:nth-child(4){
+        background:white;
+        
+    }
+    </style>
+    <script src="kitbox.js"></script>
+</head>
+<body>
+    <div class="wrap">
+        <div class="color-change"></div>
+        <div class="color-change"></div>
+        <div class="color-change"></div>
+        <div class="color-change"></div>
+    </div>
+</body>
+<script>
+    var bkColorChange=function(){
+        bindAll(".wrap .color-change","click",function(){
+            var bodyNode=findElement("body");
+            //getComputedStyle(this, null);可获取各种颜色属性
+            var colDiv= window.getComputedStyle(this, null);
+            
+            log(colDiv.backgroundColor);
+            bodyNode.style.backgroundColor=colDiv.backgroundColor;
+        })
+
+    }
+    bkColorChange();
+</script>
+</html>

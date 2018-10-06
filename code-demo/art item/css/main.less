@@ -1,5 +1,8 @@
 .wrap{
+    position: relative;
+    width: 100%;
     //居中样式
+   
     .between{
         width: 960px;
         margin:0 auto; 
@@ -16,11 +19,15 @@
         line-height: 34px;
         font-size: 13px;
     }
-    width: 100%;
+    
     header{
         width:100%;
         background: #48494a;
         height: 120px;
+        position: fixed;
+        left: 0;
+        top:0;
+        z-index: 999;
         nav{
             height: 100%;
             position: relative;
@@ -78,7 +85,8 @@
         }
     }
     .content{
-        position: relative;
+        
+        margin-top:120px;
         .insert{
             position: absolute;
             left: 50%;
@@ -177,6 +185,7 @@
     .container1{
         height: 450px;
         color:#5f686d;
+        position: relative;
         .services{
 
             h2{

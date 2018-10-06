@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var plus1 = function (array, x, y) {
+    var n = array.length;
+    if (x >= 0 && x < n && y >= 0 && y < n) {
+        if (array[x][y] != 9) {
+            array[x][y] += 1;
+        }
+    }
+}
+
+// 辅助函数, 用来给 9 周边的 8 个格子 +1
+var markAround = function (array, x, y) {
+    /*
+    ###
+    #+#
+    ###
+    */
+    if(array[x][y]===9){
+        //左边三个
+        plus1(array,x-1,y-1);
+        plus1(array,x,y-1);
+        plus1(array,x+1,y-1);
+        //中间两个
+        plus1(array,x-1,y);
+        plus1(array,x+1,y);
+        //右边三个
+        plus1(array,x-1,y+1);
+        plus1(array,x,y+1);
+        plus1(array,x+1,y+1);
+
+    }
+}
+
+var markedSquare = function (array) {
+
+   
+    var arr = array.slice(0);
+    console.log(arr);
+    for (var i = 0; i < arr.length; i++) {
+        for (var j = 0; j < arr[i].length; j++) {
+            markAround(arr, i, j)
+        }
+    }
+    return arr;
+}
+markedSquare([
+        [0, 9, 0, 0],
+        [0, 0, 9, 0],
+        [9, 0, 9, 0],
+        [0, 9, 0, 0],
+    ]);
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        .wrap{
+            margin: 0 auto;
+            width: 800px;
+            height: 1000px;
+        }
+        .max-img{
+            border: 1px solid;
+            width: 520px;
+        }
+        .max-img img{
+            padding: 10px;
+            width: 500px;
+            
+        }
+        .small-img{
+            float: left;
+            border: 1px solid;
+            margin:10px;
+            cursor: pointer;
+        }
+        .small-img img{
+            padding: 10px;
+            width: 100px;
+        }
+    </style>
+    <script src="kitbox.js"></script>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="max-img"><img src="1.jpg" alt=""></div>
+        <div class="small-img"><img src="1.jpg" alt=""></div>
+        <div class="small-img"><img src="2.jpg" alt=""></div>
+        <div class="small-img"><img src="3.jpg" alt=""></div>
+    </div>
+</body>
+<script>
+    var changeImg=function(){
+        bindAll(".wrap .small-img","click",function(){
+            var maxImg=findElement(".max-img");
+            maxImg.children[0].src=this.children[0].src;
+            log(maxImg.src,this.children[0].src);
+        })
+    }
+    changeImg()
+
+</script>
+
+</html>
