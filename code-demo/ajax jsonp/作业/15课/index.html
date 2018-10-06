@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .todo-header{
+            padding-bottom:10px;
+        }
+        .guo-hide{
+            display: none;
+        }
+        .todo-edit .edit-cell.done{
+            background: lightcoral;
+            text-decoration: line-through;
+            color:gray;
+        }
+    </style>
+    <script src="kitbox.js"></script>
+</head>
+<body>
+    <div class="todo-header">
+        <button class="tab" data-page="todo-new">显示创建 todo 界面</button>
+        <button class="tab" data-page="todo-list">显示 todo list 界面</button>
+        <button class="tab" data-page="todo-edit">显示 todo edit 界面</button>
+        <button class="tab" data-page="todo-detail">显示 todo detail 界面</button>
+    </div>
+    <div class="gua-page todo-new">
+        <input type="text" id="id-input-task">
+        <button id="id-button-add">创建todo</button>
+    </div>
+    <div class="gua-page todo-list"></div>
+    <div class="gua-page todo-edit"></div>
+    <div class="gua-page todo-detail"></div>
+</body>
+<script>
+//new页逻辑
+var addValue=function(){
+    var idAdd=findElement("#id-button-add");
+    var idTask=findElement("#id-input-task");
+    bindEvent(idAdd,"click",function(){ 
+        var val=idTask.value;
+        var todo=addData(val);
+        saveTodo(todo);
+    })
+    
+}
+//list页逻辑
+var showValue=function(todoList){
+    var todoLi=findElement(".todo-list");
+    
+    todoLi.innerHTML="";
+    //var todoList=loadTodos();
+    for(var i=0;i<todoList.length;i++){
+        appendHtml(todoLi,todoCell(todoList[i]));
+        //log("todoLi",todoList[i]);
+    }
+}
+var showTodoList=function(){
+    var todoList=loadTodos();
+    showValue(todoList);
+    editValue(todoList);
+}
+//list页添加div
+var todoCell= function(todo) {
+    var done = todo.done;
+    var task = todo.task;
+    var t = `
+        <div class="todo-cell">
+            ${task}
+        </div>
+    `
+    return t
+}
+//edit页逻辑
+var editValue=function(todoList){
+    var todoEdit=findElement(".todo-edit");
+    todoEdit.innerHTML="";
+    for(var i=0;i<todoList.length;i++){
+        appendHtml(todoEdit,editCell(todoList[i]));
+        //log("todoLi",todoList[i]);
+    }
+}
+
+var editCell=function(todo){
+    var done = todo.done;
+    var task = todo.task;
+    var status="";
+    if(done){
+        status="done";
+    }
+    var t = `
+        <div class="edit-cell ${status}">
+        <button class="todo-done">完成</button>
+        <button class="todo-delete">删除</button>
+        <span class="todo-info">${task}</span>
+        </div>
+    `
+    
+   
+    return t;
+}
+
+bindEvent(findElement(".todo-edit"),"click",function(e){
+    var e=e||event;
+    if(e.target.classList.contains("todo-done")){
+        toggleClass(e.target.parentNode,"done");
+        saveEditTodos();
+    }
+    if(e.target.classList.contains("todo-delete")){
+        e.target.parentNode.remove();
+        ///var loadList=loadTodos();
+        //saveTodos(loadList);
+        saveEditTodos();
+    }
+})
+var saveEditTodos=function(){
+    //var loadList=loadTodos();
+    var editCell=findElements(".edit-cell");
+    var todos=[];
+    for(var i=0;i<editCell.length;i++){
+        var done=editCell[i].classList.contains("done");
+        log("editCell[i].children[2]",editCell[i].children[2])
+        var task=editCell[i].children[2].innerHTML
+        var o={
+        task:task,
+        done:done,
+    }       
+        todos.push(o);
+            
+        }
+        saveTodos(todos);
+}
+</script>
+<script>
+//切换页面绑定
+bindAll(".todo-header .tab","click",function(e){
+    var e=e||event;
+    var page=e.target.dataset.page;
+    log("page",page)
+    showPage(page);
+    pushState(page);
+
+})
+//隐藏显示页面
+var showPage=function(page){
+    var guaPage=findElements(".gua-page");
+    log("guaPage",guaPage)
+    for(var i=0;i<guaPage.length;i++){
+        guaPage[i].classList.add("guo-hide");
+    }
+    var selector="."+page;
+    findElement(selector).classList.remove("guo-hide");
+    if(page=="todo-list"||page=="todo-edit"){
+        showTodoList();
+    }
+
+}
+//导航栏地址设置
+var pushState=function(page){
+    var pageName=page.split("-")[1];
+    var url="index.html?page="+pageName;
+    var state = {
+        page: page,
+    }
+    history.pushState(state, 'title', url);
+    document.title = pageName;
+}
+//导航栏地址前进后退时
+window.addEventListener("popstate", function(e) {
+    var state = e.state;
+    // state 就是 pushState 的第一个参数
+    var pageName=state.page;
+    showPage(pageName);
+    console.log('pop state', state)
+})
+//根据地址栏的参数来显示不同的页面
+var initApp=function(){
+    var query=location.search;
+    var [k,v]=query.slice(1).split("=");
+    // 让 page 初始化为 list;
+    var page="list";
+    var validPages=["list","new","edit","detail"];
+    if(k=="page"){
+        if(validPages.includes(v)){
+            page=v;
+        }
+    }
+    var pageName="todo-"+page;
+    showPage(pageName);
+}
+
+</script>
+<script>
+var addData=function(val){
+    var o={
+        task:val,
+        done:false,
+    }
+    return o;
+}
+var saveTodo=function(todo){
+    //var todoDone=findElement(".todo-done");
+    var todoList=loadTodos();
+    log("todo",todo,"todoList",todoList);
+    // var todoInfo=findElements(".todo-info");
+    // for(var i=0;i<todoInfo.length;i++){
+    //     todoList[i].task=todoInfo[i].innerHTML;
+    // }
+    todoList.push(todo);
+    saveTodos(todoList);
+}
+var loadTodos=function(){
+    var todoStr=localStorage.todos;
+    if(todoStr==undefined){
+        todoStr="[]";
+    }
+    var todoList=JSON.parse(todoStr);
+    return todoList;
+}
+var saveTodos=function(todoList){
+    localStorage.todos=JSON.stringify(todoList);
+}
+var _main=function(){
+    addValue();
+    //showValue();
+    initApp();
+}
+_main();
+</script>
+</html>

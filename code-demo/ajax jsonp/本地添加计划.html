@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .done {
+                color: gray;
+                text-decoration: line-through;
+                background: lightblue;
+            }
+        #id-content{
+            margin-top: 30px;
+            
+        }
+        .content input{
+            border: none;
+            outline: none;
+            background: green;
+        }
+        .content input:nth-child(2){
+            background: red;
+        }
+        .content span{
+            color: chocolate
+        }
+    </style>
+</head>
+
+<body>
+    <div id="id-wrap">
+        <input type="text">
+        <input type="button" value="add">
+        <div id="id-content">
+
+        </div>
+        <!-- <div class="content">
+            <input type="button" value="完成" class="content-done">
+            <input type="button" value="删除" class="content-delete">
+            <span>吃饭</span>
+        </div> -->
+    </div>
+</body>
+<script>
+    window.onload = function () {
+        var _main = function () {
+            addContent();
+            contentChange();
+            loadSave();
+        }
+        _main();
+    }
+    //简化console.log
+    var log = function () {
+        console.log.apply(console, arguments);
+    }
+    //简化querySelector
+    var query = function (name) {
+        return document.querySelector(name);
+    }
+    var addContent = function () {
+        //var wrapNode = query("#id-wrap #id-content");
+        var textNode = query("#id-wrap>input:nth-child(1)");
+        var butNode = query("#id-wrap>input:nth-child(2)");
+        butNode.addEventListener("click", function () {
+            var val = textNode.value;
+            //var o = content(val);
+            //wrapNode.insertAdjacentHTML("beforeEnd", o);
+            insertContent(val,false);
+            textNode.value="";
+            //存储的本地数据
+            localSave();
+        })
+    }
+    var insertContent=function(info,done){
+        var wrapNode = query("#id-wrap #id-content");
+        // var textNode = query("#id-wrap>input:nth-child(1)");
+        // var val = textNode.value;
+         var o = content(info,done);
+        wrapNode.insertAdjacentHTML("beforeEnd", o);
+    }
+    var contentChange = function () {
+        var contentNode = query("#id-wrap #id-content");
+        contentNode.addEventListener("click", function (e) {
+            var target = e.target || event.target;
+            //log(target.classList.contains("done"));    //判断是否存在
+            var parentDiv = target.parentNode;                //父节点
+            if (target.classList.contains("content-done")) {
+                toggleClass(parentDiv, "done");
+                localSave();
+            } else if (target.classList.contains("content-delete")) {
+                parentDiv.remove();
+                localSave();
+            }
+        })
+    }
+    //判断是否存在done
+    var toggleClass = function (element, className) {
+        if (element.classList.contains(className)) {
+            element.classList.remove(className);
+        } else {
+            element.classList.add(className);
+        }
+    }
+    var content = function (val,done) {
+        var status="";
+        if(done){
+            status="done";
+        }
+        var o = `<div class="content ${status}">
+            <input type="button" value="完成" class="content-done">
+            <input type="button" value="删除" class="content-delete">
+            <span class="information" >${val}</span>
+        </div>`
+        return o;
+    }
+    
+    var localSave=function(){
+        var arr=[];
+        var info=document.querySelectorAll(".information");
+        for(var i=0;i<info.length;i++){
+            var done=info[i].parentNode.classList.contains("done");
+            var arrSave={
+                done:done,
+                ins:info[i].innerHTML,
+            }
+            arr.push(arrSave);
+            //log(arr);
+        }
+        save(arr);
+    }
+    var loadSave=function(){
+        var loads=load();
+        for(var i=0;i<loads.length;i++){
+           // log(loads);
+        insertContent(loads[i].ins,loads[i].done);
+        }
+    }
+    //定义一个函数， 用于把 数组 写入 localStorage
+    var save=function(arr){
+        var s=JSON.stringify(arr);
+        localStorage.pedesis=s;
+    }
+    // 定义一个函数， 读取 localStorage 中的数据并解析返回
+    var load = function() {
+    var s = localStorage.pedesis;
+    return JSON.parse(s);
+}
+</script>
+
+</html>
