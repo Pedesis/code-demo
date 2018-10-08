@@ -78,5 +78,4 @@ var ajax = function(method, path, data, reseponseCallback) {
             reseponseCallback(r)
         }
     }
-
 }

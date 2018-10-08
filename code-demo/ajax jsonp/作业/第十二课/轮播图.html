@@ -51,20 +51,33 @@
 <body>
     <div class="wrap">
         <div class="content" data-imgs=3 data-active=0>
+<<<<<<< HEAD
             <div id="id-imgchange-0" class="slide-img active"><img src="slideimages/1.jpg" alt=""></div>
             <div id="id-imgchange-1" class="slide-img"><img src="slideimages/2.jpg" alt=""></div>
             <div id="id-imgchange-2" class="slide-img"><img src="slideimages/3.jpg" alt=""></div>
+=======
+        <div id="id-imgchange-0" class="slide-img active"><img src="slideimages/1.jpg" alt=""></div>
+        <div id="id-imgchange-1" class="slide-img"><img src="slideimages/2.jpg" alt=""></div>
+        <div id="id-imgchange-2" class="slide-img"><img src="slideimages/3.jpg" alt=""></div>
+>>>>>>> 80f9d8bd3f5b37ff2324cf9bced7b6488eaaad65
         </div>
         <button class="slide-left">上一页</button>
         <button class="slide-right">下一页</button>
         <div class="slide-indicators">
+<<<<<<< HEAD
             <div class="slide-indi gua-white" data-active=0></div>
             <div class="slide-indi" data-active=1></div>
             <div class="slide-indi" data-active=2></div>
+=======
+                <div class="slide-indi gua-white" data-active=0></div>
+                <div class="slide-indi" data-active=1></div>
+                <div class="slide-indi"data-active=2></div>
+>>>>>>> 80f9d8bd3f5b37ff2324cf9bced7b6488eaaad65
         </div>
     </div>
 </body>
 <script>
+<<<<<<< HEAD
     var changeImg = function () {
         var slideRight = findElement(".wrap .slide-right");
         var slideLeft = findElement(".wrap .slide-left");
@@ -143,6 +156,86 @@
     }
     changeImg()
 
+=======
+    var changeImg=function(){
+        var slideRight=findElement(".wrap .slide-right");
+        var slideLeft=findElement(".wrap .slide-left");
+        var slideImg=findElements(".wrap .slide-img");
+        var slideDot=findElement(".slide-indicators");
+        var content=findElement(".content");
+        var num=0;
+        bindEvent(slideRight,"click",function(){
+            var numberOfImgs=parseInt(content.dataset.imgs);
+            var activeIndex=parseInt(content.dataset.active);
+            var nextIndex=(activeIndex+1)%numberOfImgs;
+            log("nextIndex",nextIndex);
+            content.dataset.active=nextIndex;
+            var nextSelector="#id-imgchange-"+String(nextIndex);
+            var className="active";
+            removeClassAll(className);
+            var img=findElement(nextSelector);
+            img.classList.add(className);
+            
+        })
+        
+        bindEvent(slideLeft,"click",function(){
+            var numberOfImgs=parseInt(content.dataset.imgs);
+            var activeIndex=parseInt(content.dataset.active);
+            var prevIndex=(activeIndex+numberOfImgs-1)%numberOfImgs;
+            log("prevIndex",prevIndex);
+            content.dataset.active=prevIndex;
+            var prevSelector="#id-imgchange-"+String(prevIndex);
+            var className="active";
+            removeClassAll(className);
+            var img=findElement(prevSelector);
+            img.classList.add(className);
+            
+        })
+        var timer=null;
+        var move=function(){
+            
+            timer=setInterval(function(){
+                var numberOfImgs=parseInt(content.dataset.imgs);
+            var activeIndex=parseInt(content.dataset.active);
+            var nextIndex=(activeIndex+1)%numberOfImgs;
+            log("nextIndex",nextIndex);
+            content.dataset.active=nextIndex;
+            var nextSelector="#id-imgchange-"+String(nextIndex);
+            var className="active";
+            removeClassAll(className);
+            var img=findElement(nextSelector);
+            img.classList.add(className);
+            //圆点颜色同步
+            num=nextIndex;
+            removeClassAll("gua-white");
+            slideDot.children[num].classList.add("gua-white");
+            },1000)
+        }
+        move();
+        bindEvent(slideDot,"click",function(e){
+            clearInterval(timer);
+            e=e||event;
+            log(e.target);
+            if(e.target.classList.contains("slide-indi")){
+               // var numberOfImgs=parseInt(content.dataset.imgs);
+            //var activeIndex=parseInt(content.dataset.active);
+            removeClassAll("gua-white");
+            e.target.classList.add("gua-white");
+            var nextIndex=parseInt(e.target.dataset.active);
+            log("nextIndex",nextIndex,this);
+            content.dataset.active=nextIndex;
+            var nextSelector="#id-imgchange-"+String(nextIndex);
+            var className="active";
+            removeClassAll(className);
+            var img=findElement(nextSelector);
+            img.classList.add(className);
+            }
+            move();
+        })
+        }
+    changeImg()
+    
+>>>>>>> 80f9d8bd3f5b37ff2324cf9bced7b6488eaaad65
 </script>
 
 </html>
